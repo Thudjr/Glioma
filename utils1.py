@@ -2,7 +2,6 @@ import openslide
 import cv2
 import sys
 import time
-import math
 import numpy as np
 import pandas as pd
 import os
@@ -14,8 +13,7 @@ import json
 
 from sklearn.metrics import roc_auc_score
 from xml.etree.ElementTree import parse
-from PIL import Image
-from multiprocessing import Pool, Value, Lock
+from multiprocessing import Pool
 from user_define import config as cf
 from user_define import hyperparameter as hp
 
