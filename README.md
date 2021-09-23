@@ -1,18 +1,20 @@
 Glioma
 
-这个仓库主要包含了基于深度学习的脑部胶质瘤诊断的源代码框架，开发用于从全幻灯片癌症病理图像（WSI）中对胶质瘤分型分级。
+This repository is the CNN model to diagnose Glioma. 
 ______________________________________________________________________________________________________________
 Requisetes
 
 	Python (3.6)
 	Numpy
 	PyTorch
-	Openslide 3.4.1
+	Openslide
 	etc.
 ______________________________________________________________________________________________________________
-数据
+dataset
 
-	全幻灯片图像 (Whole slide images)
+	Whole slide images(WSI)
+	
+	
 
 
 
