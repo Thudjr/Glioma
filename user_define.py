@@ -14,7 +14,7 @@ class config():
     dataset_path = '/stor2/dingjinrui/glioma/dataset/'
     slide_dict_path = '/stor2/dingjinrui/glioma/slide_dict.json'
     checkpint_path = '/stor2/dingjinrui/glioma/checkpoint/'
-    summary_path = '/stor2/dingjinrui/glioma/runs/'
+    summary_path = '/stor2/dingjinrui/glioma/runs/runs4'
     test_path = '/stor2/dingjinrui/glioma/test/'
     result_path = '/stor2/dingjinrui/glioma/result/'
 
@@ -53,20 +53,21 @@ class hyperparameter():
     gpu = '0,1,2,3'
     resume = False
     log_every = 50
-    default_lr = 0.005  # defalut learning ratio
+    default_lr = 0.001  # defalut learning ratio
     momentum = 0.9  # SGD optimizer parameter, 'momentum'
     weight_decay = 5e-4  # SGD optimizer parameter, 'weight_decay'
     epoch = 100  # train epoch
-    batch_size = 256  # batch size (with using 8 Titan X GPU, 250 is limitation)
-    num_workers = 40  # number of CPU
+    batch_size = 128  # batch size (with using 8 Titan X GPU, 250 is limitation)
+    num_workers = 32  # number of CPU
     targets = [[1],[2],[3,4,5,6,7],[8,9],[10,11]]
     is_balanced = True
-    train_num = 10000
-    val_num = 1000
+    train_num = 100000
+    val_num = 5000
     test_num = 1000
-
 
     mining = False  # train using hard mining set (on/off)
     wrong_save = False  # collect hard mining dataset (on/off)
+
+
 
 
