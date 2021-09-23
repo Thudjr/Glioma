@@ -1,15 +1,9 @@
 import os
-import os.path
-import errno
-import numpy as np
-import sys
 import torch.utils.data as data
-import csv
-import cv2
 import random
-
 from PIL import Image
-from user_define import config as cf
+from collections import defaultdict
+
 
 
 class glioma(data.Dataset):
@@ -34,30 +28,28 @@ class glioma(data.Dataset):
                 cls_nums = 1
             for target in labels:
                 balanced_nums[target] = self.images_num // cls_nums
-        print(balanced_nums)
         return balanced_nums
 
     def _get_samples(self):
         samples = []
-
-        print(self.class_to_idx)
+        true_samples = defaultdict(int)
         for target in sorted(self.class_to_idx.keys()):
             d = os.path.join(self.images_root, str(target))
             if not os.path.isdir(d):
                 continue
 
             for root, _, fnames in sorted(os.walk(d)):
-                random.seed(705)
+                random.seed(123)
                 random.shuffle(fnames)
-                target_nums = 0
                 for fname in fnames:
-                    if fname.split('.')[-1] == 'png':
+                    if fname.split('.')[-1] in ['png','jpg']:
                         path = os.path.join(root, fname)
-                        if target_nums >= self.class_balanced_num[target]:
-                            break
+                        if true_samples[target] >= self.class_balanced_num[target]:break
                         item = (path, self.class_to_idx[target])
                         samples.append(item)
-                        target_nums += 1
+                        true_samples[target] += 1
+            random.shuffle(samples)
+        print(true_samples)
         return samples
 
     def _find_class_idx(self):
@@ -65,6 +57,7 @@ class glioma(data.Dataset):
         for i in range(len(self.images_class)):
             for j in self.images_class[i]:
                 class_to_idx[j] = i
+        print(class_to_idx)
         return class_to_idx
 
     def __len__(self):
@@ -73,9 +66,6 @@ class glioma(data.Dataset):
     def __getitem__(self, item):
         img_path, label = self.samples[item]
         img = Image.open(img_path).convert('RGB')
-        # RGB为彩色图片，L为灰度图片
-        if img.mode != 'RGB':
-            raise ValueError("image: {} isn't RGB mode.".format(self.samples[item]))
 
         if self.transform is not None:
             img = self.transform(img)
